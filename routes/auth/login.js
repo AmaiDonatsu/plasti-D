@@ -24,6 +24,18 @@ router.post('/', [
     };
 
     const isTheUser = await bcrypt.compare(password, userWithThatEmail.password);
-    if (isTheUser) {}
+    if (isTheUser) {
+        const token = jwt.sign(
+            { id: userWithThatEmail._id, email: userWithThatEmail.email },
+            process.env.JWT_SECRET,
+            { expiresIn: '5h' }
+        );
 
-})
+        return res.json({ token });
+    } else {
+        return res.status(401).send("Wrong password");
+    }
+
+});
+
+module.exports = router;

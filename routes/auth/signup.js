@@ -14,7 +14,7 @@ router.post('/', [
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     };
-    const db = getDb()
+    const db = getDb();
 
     const collection = await db.collection("users");
     const { userName, email, password } = req.body;
