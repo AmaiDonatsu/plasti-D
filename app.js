@@ -10,9 +10,13 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var signupRouter = require('./routes/auth/signup');
+var loginRouter = require('./routes/auth/login');
+
+var newOrganizationRouter = require('./routes/organizations/createOrganization');
+var getOrganizationsRouter = require('./routes/organizations/getOrganizations');
 
 var app = express();
--
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -23,9 +27,19 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+/**
+ * App routes.
+ */
+  
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+  // auth
 app.use('/signup', signupRouter);
+app.use('/login', loginRouter);
+  
+  // work
+app.use('/new_organization', newOrganizationRouter);
+app.use('/get_organizations', getOrganizationsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
